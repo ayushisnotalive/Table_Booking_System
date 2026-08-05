@@ -2,11 +2,19 @@ import {z} from "zod"
 import * as dotenv from "dotenv"
 
 
-dotenv.config();
+dotenv.config({path:require("path").resolve(__dirname,"../../../.env")});
 
 const envSchema = z.object({
     PORT : z.string().transform(Number).default(5000),
-    DB_URI : z.string().url(),
+    DATABASE_URL :  z
+    .string()
+    .min(1, "DB_URI is required")
+    .regex(
+      /^postgres(ql)?:\/\/[^:]+:[^@]+@[^:/]+:\d+\/[^?]+/,
+      "DB_URI must be a valid postgres connection string: postgres://user:password@host:port/dbname"
+    ),
+    JWT_ACCESS_SECRET : z.string(),
+    JWT_REFRESH_SECRET : z.string(),
     NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
 })
 
