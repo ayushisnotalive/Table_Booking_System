@@ -5,7 +5,7 @@ import { db } from "../db.ts"
 async function migrate(){
     try{
             const sql = readFileSync(
-                join(process.cwd(), "sql/schema.sql"),
+                join(process.cwd(), "../SQL/schema.sql"),
                 "utf-8"
             )
             await db.query(sql)

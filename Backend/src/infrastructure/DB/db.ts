@@ -2,7 +2,7 @@ import {Pool} from "pg"
 import { env } from "../configs/env.ts"
 
 export const db = new Pool({
-    connectionString : env.DB_URI,
+    connectionString : env.DATABASE_URL,
 });
 
 export async function connectDB(){
